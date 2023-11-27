@@ -16,8 +16,9 @@ class TimetableAdapter : ListAdapter<Timetable, TimetableAdapter.Holder>(Compara
         private val binding = ListItemBinding.bind(view)
 
         fun bind(timetable: Timetable) = with(binding) {
-            title.text = timetable.course.name
-            description.text = timetable.course.courseType.name
+            courseTypeTextView.text = timetable.course.courseType.name
+            courseNameTextView.text = timetable.course.name
+            courseGroupTextView.text = timetable.timetableGroup.joinToString(", ")
         }
     }
 

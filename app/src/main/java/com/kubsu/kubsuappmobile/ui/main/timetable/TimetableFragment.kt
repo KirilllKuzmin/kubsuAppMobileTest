@@ -50,6 +50,7 @@ class TimetableFragment : Fragment() {
             CoroutineScope(Dispatchers.IO).launch {
                 val sysdate = OffsetDateTime.of(LocalDate.now().atStartOfDay(), ZoneOffset.UTC)
                 val list = mainService.getTimetables("Bearer " + token, sysdate, sysdate)
+                    .sortedBy { it.numberTimeClassHeld.startTime }
                 requireActivity().runOnUiThread {
                     adapter.submitList(list)
                 }
