@@ -1,6 +1,7 @@
 package com.kubsu.kubsuappmobile.network
 
 import com.kubsu.kubsuappmobile.data.model.AuthRequest
+import com.kubsu.kubsuappmobile.data.model.Group
 import com.kubsu.kubsuappmobile.data.model.Timetable
 import com.kubsu.kubsuappmobile.data.model.User
 import retrofit2.Response
@@ -22,4 +23,8 @@ interface MainService {
     suspend fun getTimetables(@Header("Authorization") token: String,
                               @Query("start_date") startDate: OffsetDateTime,
                               @Query("end_date") endDate: OffsetDateTime): List<Timetable>
+
+    @Headers("Content-Type: application/json")
+    @GET("users/groups")
+    suspend fun getGroups(@Header("Authorization") token: String): List<Group>
 }

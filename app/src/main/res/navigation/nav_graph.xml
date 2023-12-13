@@ -11,10 +11,10 @@
         tools:layout="@layout/fragment_auth">
         <action
             android:id="@+id/action_LoginFragment_to_ProductsFragment"
-            app:destination="@id/ProductsFragment" />
+            app:destination="@id/TimetableFragment" />
     </fragment>
     <fragment
-        android:id="@+id/ProductsFragment"
+        android:id="@+id/TimetableFragment"
         android:name="com.kubsu.kubsuappmobile.ui.main.timetable.TimetableFragment"
         tools:layout="@layout/fragment_timetable">
     </fragment>

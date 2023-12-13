@@ -49,10 +49,14 @@ class TimetableFragment : Fragment() {
         viewModel.token.observe(viewLifecycleOwner) {token ->
             CoroutineScope(Dispatchers.IO).launch {
                 val sysdate = OffsetDateTime.of(LocalDate.now().atStartOfDay(), ZoneOffset.UTC)
-                val list = mainService.getTimetables("Bearer " + token, sysdate, sysdate)
+                val timetables = mainService.getTimetables("Bearer " + token, sysdate, sysdate)
                     .sortedBy { it.numberTimeClassHeld.startTime }
+                initRetrofitAuth()
+                val groups = mainService.getGroups("Bearer " + token)
+                //Далее проходимся по каждой паре, в которой проходимся по списку групп, которым присваиваем
+                //name из groups
                 requireActivity().runOnUiThread {
-                    adapter.submitList(list)
+                    adapter.submitList(timetables)
                 }
             }
         }
@@ -69,6 +73,22 @@ class TimetableFragment : Fragment() {
 
         val retrofit = Retrofit.Builder()
             .baseUrl("http://10.0.2.2:8081/").client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        mainService = retrofit.create(MainService::class.java)
+    }
+
+    private fun initRetrofitAuth() {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:8080/").client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

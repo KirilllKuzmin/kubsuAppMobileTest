@@ -1,6 +1,7 @@
 package com.kubsu.kubsuappmobile.data.model
 
-data class TimetableGroup(
-    val groupId: Long,
+data class Group(
+    val id: Long,
+
     val name: String
 )
