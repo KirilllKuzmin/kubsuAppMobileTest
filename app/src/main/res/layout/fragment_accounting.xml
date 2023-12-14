@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:elevation="5dp"
-    tools:context=".ui.main.timetable.TimetableFragment">
+    tools:context=".ui.main.accounting.AccountingFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcView"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bNavigationTimetable"
+        android:id="@+id/bNavigationAccounting"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -31,4 +31,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

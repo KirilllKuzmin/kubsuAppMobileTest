@@ -18,5 +18,5 @@ data class Timetable(
 
     val semester: Semester,
 
-    val timetableGroup: List<TimetableGroup>
+    var timetableGroup: List<TimetableGroup>
 )

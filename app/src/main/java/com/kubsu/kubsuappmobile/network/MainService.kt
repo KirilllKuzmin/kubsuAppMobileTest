@@ -1,6 +1,7 @@
 package com.kubsu.kubsuappmobile.network
 
 import com.kubsu.kubsuappmobile.data.model.AuthRequest
+import com.kubsu.kubsuappmobile.data.model.Course
 import com.kubsu.kubsuappmobile.data.model.Group
 import com.kubsu.kubsuappmobile.data.model.Timetable
 import com.kubsu.kubsuappmobile.data.model.User
@@ -27,4 +28,8 @@ interface MainService {
     @Headers("Content-Type: application/json")
     @GET("users/groups")
     suspend fun getGroups(@Header("Authorization") token: String): List<Group>
+
+    @Headers("Content-Type: application/json")
+    @GET("accounting/lecturers/courses")
+    suspend fun getLecturerCourses(@Header("Authorization") token: String): List<Course>
 }

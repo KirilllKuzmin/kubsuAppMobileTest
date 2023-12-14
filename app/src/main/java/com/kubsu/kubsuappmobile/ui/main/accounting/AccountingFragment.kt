@@ -1,16 +1,17 @@
-package com.kubsu.kubsuappmobile.ui.main.timetable
+package com.kubsu.kubsuappmobile.ui.main.accounting
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kubsu.kubsuappmobile.R
+import com.kubsu.kubsuappmobile.adapter.AccountingAdapter
 import com.kubsu.kubsuappmobile.adapter.TimetableAdapter
+import com.kubsu.kubsuappmobile.databinding.FragmentAccountingBinding
 import com.kubsu.kubsuappmobile.databinding.FragmentTimetableBinding
 import com.kubsu.kubsuappmobile.network.MainService
 import com.kubsu.kubsuappmobile.ui.auth.AuthViewModel
@@ -25,11 +26,11 @@ import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 
-class TimetableFragment : Fragment() {
+class AccountingFragment : Fragment() {
 
-    private lateinit var adapter: TimetableAdapter
+    private lateinit var adapter: AccountingAdapter
 
-    private lateinit var binding: FragmentTimetableBinding
+    private lateinit var binding: FragmentAccountingBinding
 
     private lateinit var mainService: MainService
 
@@ -39,7 +40,8 @@ class TimetableFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentTimetableBinding.inflate(inflater, container, false)
+        binding = FragmentAccountingBinding.inflate(inflater, container, false)
+        binding.bNavigationAccounting.selectedItemId = R.id.menu_accounting
         return binding.root
     }
 
@@ -47,32 +49,22 @@ class TimetableFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initRetrofit()
         initRcView()
-        binding.bNavigationTimetable.setOnNavigationItemSelectedListener {
+        binding.bNavigationAccounting.selectedItemId = R.id.menu_accounting
+        binding.bNavigationAccounting.setOnNavigationItemSelectedListener {
             when(it.itemId) {
-                R.id.menu_accounting -> {
-                    findNavController().navigate(R.id.accountingFragment2)
+                R.id.menu_timetable -> {
+                    findNavController().navigate(R.id.TimetableFragment)
                 }
             }
             true
         }
         viewModel.token.observe(viewLifecycleOwner) {token ->
             CoroutineScope(Dispatchers.IO).launch {
-                val sysdate = OffsetDateTime.of(LocalDate.now().atStartOfDay(), ZoneOffset.UTC)
-                var timetables = mainService.getTimetables("Bearer " + token, sysdate, sysdate)
-                    .sortedBy { it.numberTimeClassHeld.startTime }
-                initRetrofitAuth()
-                val groups = mainService.getGroups("Bearer " + token)
-
-                timetables.forEach { timetable ->
-                    timetable.timetableGroup.forEach { timetableGroup ->
-                        groups.find { it.id == timetableGroup.groupId }?.let { group ->
-                            timetableGroup.name = group.name
-                        }
-                    }
-                }
+                var courses = mainService.getLecturerCourses("Bearer " + token)
+                    .sortedBy { it.name }
 
                 requireActivity().runOnUiThread {
-                    adapter.submitList(timetables)
+                    adapter.submitList(courses)
                 }
             }
         }
@@ -95,25 +87,10 @@ class TimetableFragment : Fragment() {
         mainService = retrofit.create(MainService::class.java)
     }
 
-    private fun initRetrofitAuth() {
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
-
-        val client = OkHttpClient.Builder()
-            .addInterceptor(interceptor)
-            .build()
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/").client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        mainService = retrofit.create(MainService::class.java)
-    }
-
     private fun initRcView() = with(binding) {
-        adapter = TimetableAdapter()
+        adapter = AccountingAdapter()
         rcView.layoutManager = LinearLayoutManager(context)
         rcView.adapter = adapter
     }
+
 }

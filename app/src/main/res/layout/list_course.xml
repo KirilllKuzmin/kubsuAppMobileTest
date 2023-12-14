@@ -8,8 +8,6 @@
     android:layout_margin="8dp"
     android:padding="16dp">
 
-    <!-- Измените типы и стили в соответствии с вашими реальными данными -->
-
     <TextView
         android:id="@+id/courseTypeTextView"
         android:layout_width="wrap_content"
@@ -17,25 +15,16 @@
         android:text="Course Type"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/courseNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/courseTypeTextView"
+        android:layout_marginTop="4dp"
         android:text="Course Name"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:layout_below="@id/courseTypeTextView"
-        android:layout_marginTop="4dp"/>
+        android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/courseGroupTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Course Group"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:layout_below="@id/courseNameTextView"
-        android:layout_marginTop="4dp"/>
 </RelativeLayout>

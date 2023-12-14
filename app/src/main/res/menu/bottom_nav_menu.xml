@@ -1,13 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_timetable"
-        android:title="Расписание"/>
+        android:icon="@drawable/ic_timetable"
+        android:title="Расписание"
+        android:orderInCategory="1" />
 
     <item
-        android:id="@+id/menu_journal"
-        android:title="Журнал" />
+        android:id="@+id/menu_accounting"
+        android:icon="@drawable/ic_accounting"
+        android:title="Журнал"
+        android:orderInCategory="2" />
 
-    <item
-        android:id="@+id/menu_settings"
-        android:title="Настройки" />
 </menu>

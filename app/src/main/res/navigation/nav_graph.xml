@@ -16,6 +16,10 @@
     <fragment
         android:id="@+id/TimetableFragment"
         android:name="com.kubsu.kubsuappmobile.ui.main.timetable.TimetableFragment"
-        tools:layout="@layout/fragment_timetable">
-    </fragment>
+        tools:layout="@layout/fragment_timetable"/>
+    <fragment
+        android:id="@+id/accountingFragment2"
+        android:name="com.kubsu.kubsuappmobile.ui.main.accounting.AccountingFragment"
+        android:label="fragment_accounting"
+        tools:layout="@layout/fragment_accounting" />
 </navigation>
